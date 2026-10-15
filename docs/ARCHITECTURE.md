@@ -1,11 +1,11 @@
-# 🏛️ Technical Architecture & System Design
+# Technical Architecture & System Design
 ## PSP Go Markdown Reader (`02_MarkdownReader`)
 
 This document provides an exhaustive, low-level technical specification of the software architecture, memory layout, graphics pipeline, mathematical models, and embedded hardware constraints utilized in the **PSP Go Markdown Reader**.
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 1. [Architectural Overview](#1-architectural-overview)
 2. [Memory Budget & Safety Blueprint](#2-memory-budget--safety-blueprint)
 3. [Markdown Parser & Layout Engine](#3-markdown-parser--layout-engine)

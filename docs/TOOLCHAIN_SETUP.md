@@ -1,11 +1,11 @@
-# 🛠️ Toolchain Setup & Compilation Guide
+# Toolchain Setup & Compilation Guide
 ## PSP Go Modern Lab (`02_MarkdownReader`)
 
 This guide explains how to set up the development environment, compile the project from source code, execute the native host unit testing suite, and deploy the application onto physical Sony PSP Go hardware.
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 1. [Toolchain Overview](#1-toolchain-overview)
 2. [Prerequisites & Host Dependencies](#2-prerequisites--host-dependencies)
 3. [Setting Up the PSPDEV Environment](#3-setting-up-the-pspdev-environment)

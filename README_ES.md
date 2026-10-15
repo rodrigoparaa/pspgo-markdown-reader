@@ -1,4 +1,4 @@
-# 📖 PSP Go Markdown Reader (`02_MarkdownReader`)
+# PSP Go Markdown Reader (`02_MarkdownReader`)
 
 [![Plataforma](https://img.shields.io/badge/Plataforma-Sony%20PSP%20Go%20%7C%20PSP--N1000-003791?style=for-the-badge&logo=playstation&logoColor=white)](https://es.wikipedia.org/wiki/PlayStation_Portable_Go)
 [![Arquitectura](https://img.shields.io/badge/Arquitectura-MIPS%20Allegrex%20R4000%20%40%20333MHz-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/PlayStation_Portable_hardware)
@@ -12,30 +12,30 @@
 
 ---
 
-### 🌐 Idioma / Language
-* 🇪🇸 **Español** (Documento actual)
-* 🇬🇧 **[English Documentation (README.md)](README.md)**
+### Idioma / Language
+* **Español** (Documento actual)
+* **[English Documentation (README.md)](README.md)**
 
 ---
 
-## 📑 Tabla de Contenidos
-1. [Descripción General](#-descripción-general)
-2. [Características Principales](#-características-principales)
-3. [Ergonomía en Modo Slider Cerrado](#-ergonomía-en-modo-slider-cerrado)
-4. [Diseño de Interfaz y Maquetación](#-diseño-de-interfaz-y-maquetación)
-5. [Matriz de Controles e Interacción](#-matriz-de-controles-e-interacción)
-6. [Arquitectura del Sistema y Módulos](#-arquitectura-del-sistema-y-módulos)
-7. [Seguridad del Hardware y Prevención de Bricks](#-seguridad-del-hardware-y-prevención-de-bricks)
-8. [Estructura del Proyecto](#-estructura-del-proyecto)
-9. [Toolchain y Compilación desde Fuentes](#-toolchain-y-compilación-desde-fuentes)
-10. [Instalación y Despliegue en la PSP Go](#-instalación-y-despliegue-en-la-psp-go)
-11. [Suite de Pruebas Unitarias en Host](#-suite-de-pruebas-unitarias-en-host)
-12. [Especificaciones Técnicas](#-especificaciones-técnicas)
-13. [Licencia](#-licencia)
+## Tabla de Contenidos
+1. [Descripción General](#descripción-general)
+2. [Características Principales](#características-principales)
+3. [Ergonomía en Modo Slider Cerrado](#ergonomía-en-modo-slider-cerrado)
+4. [Diseño de Interfaz y Maquetación](#diseño-de-interfaz-y-maquetación)
+5. [Matriz de Controles e Interacción](#matriz-de-controles-e-interacción)
+6. [Arquitectura del Sistema y Módulos](#arquitectura-del-sistema-y-módulos)
+7. [Seguridad del Hardware y Prevención de Bricks](#seguridad-del-hardware-y-prevención-de-bricks)
+8. [Estructura del Proyecto](#estructura-del-proyecto)
+9. [Toolchain y Compilación desde Fuentes](#toolchain-y-compilación-desde-fuentes)
+10. [Instalación y Despliegue en la PSP Go](#instalación-y-despliegue-en-la-psp-go)
+11. [Suite de Pruebas Unitarias en Host](#suite-de-pruebas-unitarias-en-host)
+12. [Especificaciones Técnicas](#especificaciones-técnicas)
+13. [Licencia](#licencia)
 
 ---
 
-## 🎯 Descripción General
+## Descripción General
 
 El **PSP Go Markdown Reader** transforma la Sony PSP Go en un lector digital técnico de bolsillo diseñado para programadores, administradores de sistemas y estudiantes. Al prescindir de navegadores pesados y motores web, el proyecto exprime el coprocesador gráfico (GE) del chip Allegrex para renderizar documentos Markdown complejos a **60 cuadros por segundo** con físicas inerciales fluidas.
 
@@ -62,43 +62,43 @@ A diferencia de los visores de PDF convencionales que consumen abundante memoria
 
 ---
 
-## ✨ Características Principales
+## Características Principales
 
-* 🚀 **Pipeline Gráfico Oficial por Hardware a 60 FPS:**
+* **Pipeline Gráfico Oficial por Hardware a 60 FPS:**
   * Implementado mediante la librería oficial de bajo nivel `libpspgu`.
   * Doble búfer en la memoria VRAM embebida (eDRAM) sincronizado estrictamente con el refresco vertical de la pantalla (`sceDisplayWaitVblankStart()`).
   * Cero parpadeos (*flickering*), cero cortes de pantalla (*tearing*) y cero cuelgues del bus de memoria.
-* 📝 **Motor de Maquetación Markdown en Streaming:**
+* **Motor de Maquetación Markdown en Streaming:**
   * **Encabezados:** `# H1` (Escala bitmap 2x), `## H2` (Escala bitmap 2x), `### H3` (Escala 1x con color de acento).
   * **Bloques de código cercados (```` ``` ````):** Contenedor rectangular oscuro con bordes y tipografía monoespaciada en verde terminal.
   * **Citas en bloque (`>`):** Barra lateral de acento de 3 px y paleta cromática atenuada.
   * **Listas (`-`, `*`, `+`):** Viñetas gráficas cuadradas alineadas automáticamente con 14 px de sangría.
   * **Reglas horizontales (`---`, `***`):** Separadores continuos limpios de 1 píxel.
   * **Ajuste de línea inteligente (*Word-Wrapping*):** Algoritmo que mide dinámicamente las cadenas y corta renglones en espacios entre palabras, garantizando hasta 55 caracteres/renglón para el ancho útil de 448 px.
-* 🔤 **Sanitizador UTF-8 y Tipografía Robusta:**
+* **Sanitizador UTF-8 y Tipografía Robusta:**
   * Mapea caracteres acentuados españoles y latinos (`á`, `é`, `í`, `ó`, `ú`, `ñ`, `Á`, `É`, `¿`, `¡`) directamente a glifos ASCII legibles en la tipografía `font_8x8`.
-  * Omite de forma transparente secuencias multibyte de emojis (`📖`, `🌟`, `🧪`) impidiendo que aparezcan interrogaciones corruptas (`????`).
+  * Omite de forma transparente secuencias multibyte de emojis impidiendo que aparezcan interrogaciones corruptas (`????`).
   * Limpia el formato Markdown inline (`**negrita**`, `__negrita__`, `` `código inline` ``) sin alterar guiones bajos internos en variables o nombres de archivos de programación (`snake_case`, `02_MarkdownReader.md`).
-* ⚡ **Física de Desplazamiento Cinético (Kinetic Scroll):**
+* **Física de Desplazamiento Cinético (Kinetic Scroll):**
   * Curva analógica con aceleración cuadrática proporcional y filtrado de zona muerta de 22 unidades.
   * Coeficiente de fricción inercial exponencial ($\mu = 0.88$) que produce una desaceleración suave y natural al soltar el stick.
   * Salto de página instantáneo mediante gatillos superiores (**L** / **R**) manteniendo 2 líneas de contexto visual para no perder el hilo de lectura.
   * Margen de seguridad inferior de 90 px al final del documento para garantizar que el último párrafo pueda desplazarse completamente por encima de la barra inferior.
-* 🎨 **3 Temas Cromáticos de Alto Confort:**
+* **3 Temas Cromáticos de Alto Confort:**
   * **Dark Cyberpunk:** Fondo azul oscuro `#0F0F14`, texto claro `#E0E6ED`, acentos cian `#20AADD`.
   * **Sepia Paper:** Fondo pergamino cálido `#F4ECD8`, texto café `#3E3123`, encabezados terracota `#B84A28`.
   * **OLED High-Contrast:** Fondo negro absoluto `#000000`, texto blanco puro `#FFFFFF`, acentos oro `#F0B020`.
-* 📁 **Explorador de Archivos Integrado:**
+* **Explorador de Archivos Integrado:**
   * Detección y lectura directa desde la memoria interna eMMC NAND (`ef0:/DOCS/*.md`) con respaldo automático para tarjetas Memory Stick Micro (`ms0:/DOCS/*.md`).
   * Muestra tamaño de cada archivo en KB/Bytes, barra de scroll proporcional y resaltado visual del elemento activo.
-* 🔋 **Telemetría y Gestión de Energía:**
+* **Telemetría y Gestión de Energía:**
   * Indicador gráfico de batería en tiempo real y porcentaje numérico con detección de cable de carga (`+`).
   * Reloj digital sincronizado con el RTC de la consola, con detección automática de preferencia horaria del sistema (**12 horas con AM/PM** o **24 horas**) vía `libpsputility`.
   * Latido constante `scePowerTick(PSP_POWER_TICK_ALL)` que evita que la consola entre en suspensión durante lecturas prolongadas.
 
 ---
 
-## 📱 Ergonomía en Modo Slider Cerrado
+## Ergonomía en Modo Slider Cerrado
 
 La Sony PSP Go destaca por su factor de forma deslizable (*slider*). Un pilar fundamental de diseño en este proyecto fue lograr que la lectura sea completamente cómoda con la pantalla plegada:
 
@@ -127,7 +127,7 @@ La Sony PSP Go destaca por su factor de forma deslizable (*slider*). Un pilar fu
 
 ---
 
-## 🖥️ Diseño de Interfaz y Maquetación
+## Diseño de Interfaz y Maquetación
 
 La interfaz ha sido diseñada al píxel para la resolución nativa de $480 \times 272$:
 
@@ -150,7 +150,7 @@ La interfaz ha sido diseñada al píxel para la resolución nativa de $480 \time
 
 ---
 
-## 🎮 Matriz de Controles e Interacción
+## Matriz de Controles e Interacción
 
 | Botón / Gesto | Consola Abierta (Modo Activo) | Consola Cerrada (Slider Plegado) |
 | :--- | :--- | :--- |
@@ -168,7 +168,7 @@ La interfaz ha sido diseñada al píxel para la resolución nativa de $480 \time
 
 ---
 
-## 🏗️ Arquitectura del Sistema y Módulos
+## Arquitectura del Sistema y Módulos
 
 El proyecto sigue una arquitectura en 3 capas desacopladas, diseñada para facilitar el mantenimiento y las pruebas automatizadas:
 
@@ -193,6 +193,10 @@ MarkdownReader/
 ├── tests/                 # Suite de pruebas unitarias nativas
 │   └── test_core.c        # Ejecutable autónomo para Mac/Linux (Clang/GCC)
 │
+├── docs/                  # Documentación técnica de arquitectura y herramientas
+│   ├── ARCHITECTURE.md    # Diseño de bajo nivel y mapa de memoria
+│   └── TOOLCHAIN_SETUP.md # Guía para configurar PSPDEV en sistemas modernos
+│
 ├── docs_sample/           # Documentos Markdown de ejemplo listos para probar
 ├── Makefile               # Sistema de compilación oficial PSPDEV
 ├── activate.sh            # Script de activación del entorno virtual de desarrollo
@@ -210,7 +214,7 @@ Para evitar caídas de pila (*stack overflow*) y errores de bus en la arquitectu
 
 ---
 
-## ⚠️ Seguridad del Hardware y Prevención de Bricks
+## Seguridad del Hardware y Prevención de Bricks
 
 Al desarrollar software casero para la Sony PSP Go (PSP-N1000), deben respetarse dos reglas de seguridad esenciales:
 
@@ -234,7 +238,7 @@ Al desarrollar software casero para la Sony PSP Go (PSP-N1000), deben respetarse
 
 ---
 
-## 🧰 Toolchain y Compilación desde Fuentes
+## Toolchain y Compilación desde Fuentes
 
 ### Requisitos Previos
 1. **Toolchain PSPDEV:** Instalación funcional de [PSPDEV](https://github.com/pspdev/pspdev) que incluya `psp-gcc` (GCC 15.2+), `psp-fixup-imports`, `mksfoex` y `pack-pbp`.
@@ -269,7 +273,7 @@ El proceso generará el ejecutable final firmado: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 🚀 Instalación y Despliegue en la PSP Go
+## Instalación y Despliegue en la PSP Go
 
 1. Enciende la PSP Go y conéctala a la computadora con el cable USB oficial (con CFW 6.60 PRO / Infinity activo).
 2. La memoria interna de 16 GB se montará como `/Volumes/PSP GO` (en macOS) o como una unidad extraíble (Windows/Linux).
@@ -294,7 +298,7 @@ El proceso generará el ejecutable final firmado: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 📊 Especificaciones Técnicas
+## Especificaciones Técnicas
 
 | Parámetro | Especificación | Observaciones |
 | :--- | :--- | :--- |
@@ -311,7 +315,7 @@ El proceso generará el ejecutable final firmado: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto está publicado bajo los términos de la **Licencia MIT**. Eres libre de estudiar, modificar, redistribuir e integrar este código en otros proyectos caseros. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 

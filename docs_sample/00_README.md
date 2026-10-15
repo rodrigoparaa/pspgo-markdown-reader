@@ -1,4 +1,4 @@
-# 📖 PSP Go Markdown Reader (`02_MarkdownReader`)
+# PSP Go Markdown Reader (`02_MarkdownReader`)
 
 [![Platform](https://img.shields.io/badge/Platform-Sony%20PSP%20Go%20%7C%20PSP--N1000-003791?style=for-the-badge&logo=playstation&logoColor=white)](https://en.wikipedia.org/wiki/PlayStation_Portable_Go)
 [![Architecture](https://img.shields.io/badge/Architecture-MIPS%20Allegrex%20R4000%20%40%20333MHz-blue?style=for-the-badge)](https://en.wikipedia.org/wiki/PlayStation_Portable_hardware)
@@ -12,30 +12,30 @@
 
 ---
 
-### 🌐 Language / Idioma
+### Language / Idioma
 * **English** (Current Document)
-* 🇪🇸 **[Documentación en Español (README_ES.md)](README_ES.md)**
+* **[Documentación en Español (README_ES.md)](README_ES.md)**
 
 ---
 
-## 📑 Table of Contents
-1. [Project Overview](#-project-overview)
-2. [Key Features](#-key-features)
-3. [Slider-Closed Ergonomics](#-slider-closed-ergonomics)
-4. [User Interface & Layout](#-user-interface--layout)
-5. [Controls & Interaction Matrix](#-controls--interaction-matrix)
-6. [Architecture & Subsystems](#-architecture--subsystems)
-7. [Hardware Safety & Brick Prevention](#-hardware-safety--brick-prevention)
-8. [Project Structure](#-project-structure)
-9. [Toolchain & Building from Source](#-toolchain--building-from-source)
-10. [Deployment & Installation](#-deployment--installation)
-11. [Host Unit Testing Suite](#-host-unit-testing-suite)
-12. [Technical Specifications](#-technical-specifications)
-13. [License](#-license)
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Key Features](#key-features)
+3. [Slider-Closed Ergonomics](#slider-closed-ergonomics)
+4. [User Interface & Layout](#user-interface--layout)
+5. [Controls & Interaction Matrix](#controls--interaction-matrix)
+6. [Architecture & Subsystems](#architecture--subsystems)
+7. [Hardware Safety & Brick Prevention](#hardware-safety--brick-prevention)
+8. [Project Structure](#project-structure)
+9. [Toolchain & Building from Source](#toolchain--building-from-source)
+10. [Deployment & Installation](#deployment--installation)
+11. [Host Unit Testing Suite](#host-unit-testing-suite)
+12. [Technical Specifications](#technical-specifications)
+13. [License](#license)
 
 ---
 
-## 🎯 Project Overview
+## Project Overview
 
 The **PSP Go Markdown Reader** transforms the Sony PSP Go into a dedicated pocket-sized e-reader for developers, engineers, and students. By eliminating all distractions and utilizing the hardware graphics engine (GE) of the Allegrex processor, it renders complex Markdown documents at a rock-solid **60 frames per second** with sub-pixel inertial physics.
 
@@ -62,43 +62,43 @@ Unlike web-based readers or PDF renderers that consume extensive memory and suff
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-* 🚀 **Hardware-Accelerated 60 FPS Pipeline:**
+* **Hardware-Accelerated 60 FPS Pipeline:**
   * Uses official `libpspgu` with double buffering in embedded VRAM (eDRAM).
   * Strict synchronization with vertical blanking (`sceDisplayWaitVblankStart()`).
   * Zero screen tearing, zero visual stuttering, and zero bus contention.
-* 📝 **Real-Time Streaming Markdown Parser:**
+* **Real-Time Streaming Markdown Parser:**
   * **Headings:** `# H1` (2x scale bitmap), `## H2` (2x scale bitmap), `### H3` (1x accent color).
   * **Fenced Code Blocks (```` ``` ````):** Dark container with borders and monospace terminal syntax styling.
   * **Blockquotes (`>`):** Dedicated left accent bar (3 px width) and differentiated palette.
   * **Lists (`-`, `*`, `+`):** Geometric bullet glyphs with automatic 14 px margin indentation.
   * **Horizontal Dividers (`---`, `***`):** Clean single-pixel semantic separation rules.
   * **Word-Wrapping Engine:** Dynamic character measurement splitting lines at safe boundaries without breaking words across rows (up to 55 chars/row for 448 px usable width).
-* 🔤 **Robust UTF-8 Sanitizer & Typography:**
+* **Robust UTF-8 Sanitizer & Typography:**
   * Maps 2-byte UTF-8 Spanish/Latin characters (`á`, `é`, `í`, `ó`, `ú`, `ñ`, `Á`, `É`, `¿`, `¡`) directly to clean ASCII glyphs.
-  * Automatically filters multi-byte emoji sequences (`📖`, `🌟`, `🧪`) without leaving stray question marks (`????`).
+  * Automatically filters multi-byte emoji sequences without leaving stray question marks (`????`).
   * Cleans inline Markdown formatting (`**bold**`, `__bold__`, `` `inline code` ``) while strictly preserving intra-word underscores in programming identifiers and filenames (`snake_case`, `02_MarkdownReader.md`).
-* ⚡ **Kinetic Inertial Scroll Physics:**
+* **Kinetic Inertial Scroll Physics:**
   * Non-linear analog stick response curve with quadratic acceleration and 22-unit deadzone filtering.
   * Exponential friction decay ($\mu = 0.88$) for smooth deceleration.
   * Instant page paging via Shoulder Triggers (**L** / **R**) with 2-line context overlap.
   * Clamping math with a 90 px end-of-document breathing cushion to ensure the final lines never get hidden behind the bottom bar.
-* 🎨 **3 Handcrafted High-Contrast Themes:**
+* **3 Handcrafted High-Contrast Themes:**
   * **Dark Cyberpunk:** Deep midnight blue `#0F0F14`, soft white `#E0E6ED`, vivid cyan accent `#20AADD`.
   * **Sepia Paper:** Warm eye-friendly parchment `#F4ECD8`, coffee ink `#3E3123`, terracotta headers `#B84A28`.
   * **OLED High-Contrast:** Pitch black `#000000`, pure white `#FFFFFF`, bright gold accent `#F0B020`.
-* 📁 **Embedded File Explorer:**
+* **Embedded File Explorer:**
   * Reads directly from internal eMMC NAND (`ef0:/DOCS/*.md`) and Memory Stick Micro (`ms0:/DOCS/*.md`).
   * Displays file size in KB/bytes, scrollbar indicators, and active file highlights.
-* 🔋 **System Telemetry & Power Management:**
+* **System Telemetry & Power Management:**
   * Real-time battery gauge with dynamic charging indicator (`+` / lightning bolt).
   * System RTC clock with automatic **12-hour (AM/PM)** vs **24-hour** preference detection via `libpsputility`.
   * Integrated `scePowerTick(PSP_POWER_TICK_ALL)` keep-awake heartbeat to prevent sleep timeouts during extended reading sessions.
 
 ---
 
-## 📱 Slider-Closed Ergonomics
+## Slider-Closed Ergonomics
 
 The Sony PSP Go features an ultra-portable slider design. One of the core design goals of this project was to make reading comfortable when the display is slid down (folded):
 
@@ -127,7 +127,7 @@ The Sony PSP Go features an ultra-portable slider design. One of the core design
 
 ---
 
-## 🖥️ User Interface & Layout
+## User Interface & Layout
 
 The interface is engineered pixel-by-pixel for the $480 \times 272$ native resolution:
 
@@ -150,7 +150,7 @@ The interface is engineered pixel-by-pixel for the $480 \times 272$ native resol
 
 ---
 
-## 🎮 Controls & Interaction Matrix
+## Controls & Interaction Matrix
 
 | Input Action | Open Console (Active Mode) | Closed Console (Pocket Mode) |
 | :--- | :--- | :--- |
@@ -168,7 +168,7 @@ The interface is engineered pixel-by-pixel for the $480 \times 272$ native resol
 
 ---
 
-## 🏗️ Architecture & Subsystems
+## Architecture & Subsystems
 
 The codebase follows a strict 3-tier modular architecture designed for maintainability and testability:
 
@@ -193,6 +193,10 @@ MarkdownReader/
 ├── tests/                 # Native host unit testing suite
 │   └── test_core.c        # Standalone verification executable (Clang/GCC)
 │
+├── docs/                  # In-depth technical architecture and toolchain guides
+│   ├── ARCHITECTURE.md    # Low-level system design and memory map
+│   └── TOOLCHAIN_SETUP.md # Guide to setting up PSPDEV on modern OS
+│
 ├── docs_sample/           # Sample markdown documents for testing
 ├── Makefile               # Official PSPDEV build system
 ├── activate.sh            # Portable isolated environment activation script
@@ -210,7 +214,7 @@ To prevent stack overflows and erratic bus crashes on the MIPS Allegrex architec
 
 ---
 
-## ⚠️ Hardware Safety & Brick Prevention
+## Hardware Safety & Brick Prevention
 
 When developing homebrew for the Sony PSP Go (PSP-N1000), strict safety rules must be adhered to:
 
@@ -234,7 +238,7 @@ When developing homebrew for the Sony PSP Go (PSP-N1000), strict safety rules mu
 
 ---
 
-## 🧰 Toolchain & Building from Source
+## Toolchain & Building from Source
 
 ### Prerequisites
 1. **PSPDEV Toolchain:** A working installation of [PSPDEV](https://github.com/pspdev/pspdev) containing `psp-gcc` (GCC 15.2+), `psp-fixup-imports`, `mksfoex`, and `pack-pbp`.
@@ -262,7 +266,7 @@ cd ..
 *Output:*
 ```text
 ==================================================
-🧪 SUITE DE PRUEBAS UNITARIAS: PSP Go Markdown Reader
+SUITE DE PRUEBAS UNITARIAS: PSP Go Markdown Reader
 ==================================================
 [TEST] Verificando Theme Engine...
   -> Theme Engine OK.
@@ -275,7 +279,7 @@ cd ..
 [TEST] Verificando Maquina de Estados y Explorador...
   -> App State OK.
 ==================================================
-✅ TODAS LAS PRUEBAS DEL CORE PASARON SATISFACTORIAMENTE
+TODAS LAS PRUEBAS DEL CORE PASARON SATISFACTORIAMENTE
 ==================================================
 ```
 
@@ -289,7 +293,7 @@ This produces the final standalone signed homebrew file: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 🚀 Deployment & Installation
+## Deployment & Installation
 
 1. Turn on your PSP Go and connect it to your computer via USB (**CFW 6.60 PRO / Infinity**).
 2. The internal 16 GB storage will mount at `/Volumes/PSP GO` (macOS) or as a removable drive letter (Windows/Linux).
@@ -314,7 +318,7 @@ This produces the final standalone signed homebrew file: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 📊 Technical Specifications
+## Technical Specifications
 
 | Parameter | Specification | Notes |
 | :--- | :--- | :--- |
@@ -331,7 +335,7 @@ This produces the final standalone signed homebrew file: `EBOOT.PBP` (~152 KB).
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License**. You are free to inspect, modify, distribute, and integrate this software into other homebrew projects. See the [LICENSE](LICENSE) file for full details.
 
