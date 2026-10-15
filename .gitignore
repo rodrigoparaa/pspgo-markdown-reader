@@ -1,0 +1,33 @@
+# ==============================================================================
+# Git Ignore - PSP Go Modern Lab (MarkdownReader)
+# ==============================================================================
+
+# macOS metadata & artifacts (Prevenir "Datos dañados" en PSP)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# PSPDEV Toolchain (Enlace o carpeta SDK local)
+pspdev
+pspdev/
+
+# Intermediate build objects (Privacidad: evitan filtrar rutas absolutas del host)
+*.o
+*.elf
+*.bin
+*.map
+
+# Test binaries locales macOS
+run_tests
+
+# Hardware safety: Prevenir inclusión de CIPL Flasher (brick irreversible en PSP Go)
+**/CIPL_Flasher/**
+
+# Logs
+*.log
+
+# Conservar binarios listos para producción si aplica
+!EBOOT.PBP
+!PARAM.SFO
